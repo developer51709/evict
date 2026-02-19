@@ -96,6 +96,15 @@ COLORS = _Dotdict(
 )
 
 EMOJIS = _Dotdict(
+    AUDIO=_Dotdict(
+        PREVIOUS="⏮️",
+        PAUSE="⏸️",
+        RESUME="▶️",
+        SKIP="⏭️",
+        QUEUE="📜",
+        REPEAT="🔁",
+        REPEAT_TRACK="🔂",
+    ),
     CONTEXT=_Dotdict(
         APPROVE="<:approve:1271137029474832437>",
         WARN="<:warn:1271137050492469280>",

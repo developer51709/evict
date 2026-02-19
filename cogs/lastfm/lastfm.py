@@ -305,7 +305,10 @@ class Lastfm(Cog):
         )
 
     async def cog_load(self) -> None:
-        await self.spotify_client.refresh()
+        try:
+            await self.spotify_client.refresh()
+        except Exception:
+            log.warning("Spotify client refresh failed - Spotify features in Last.fm will be limited")
 
     async def cog_unload(self) -> None:
         await self.spotify_client.close()
