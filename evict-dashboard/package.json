@@ -1,3 +1,10 @@
 {
-  
+  "name": "evict-dashboard",
+  "version": "1.0.0",
+  "description": "The dashboard for the Evict Discord bot.",
+  "main": "start.js",
+  "scripts": {
+    "start": "node start.js",
+    "dev": "nodemon start.js"
+  }
 }
