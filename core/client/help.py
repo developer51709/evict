@@ -83,7 +83,7 @@ class EvictHelp(MinimalHelpCommand):
 
     async def send_bot_help(
         self, mapping: Mapping[Union[Cog, None], List[Command[Any, Callable[..., Any], Any]]]  # type: ignore
-    ) -> Coroutine[Any, Any, None]:  # type: ignore
+    ) -> None:
 
         await self.initialize_bot_user()
         bot = self.context.bot
