@@ -1077,7 +1077,7 @@ class Fun(Cog):
 
         vape = await ctx.vape("Hitting your vape..")
         await asyncio.sleep(1)
-        return await ctx.vape(f"Hit your **{flavor}** vape. You now have **{hits}** hits.", patch=vape)
+        return await ctx.vape(f"Hit your {flavor} vape. You now have `{hits}` hits.", patch=vape)
 
     @cooldown(1, 5, BucketType.member)
     @vape.command(name="flavor", aliases=["flavour", "set"], example="blueberry")
@@ -1105,7 +1105,7 @@ class Fun(Cog):
         except Exception:
             return await ctx.warn("An error occurred while setting your vape flavor.")
 
-        return await ctx.approve(f"Your vape flavor has been set to **{flavor}**.")
+        return await ctx.approve(f"Your vape flavor has been set to `{flavor}`.")
 
     @group(name="blunt", aliases=["joint"], invoke_without_command=True)
     async def blunt(self, ctx: Context):
