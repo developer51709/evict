@@ -1131,7 +1131,7 @@ class Fun(Cog):
         if record:
             user = ctx.guild.get_member(record.get("user_id"))
             return await ctx.warn(
-                f"A blunt is already held by **{user or record.get('user_id')}**\n> It has been hit"
+                f"A blunt is already held by **{user or record.get('user_id')}**\n-# It has been hit"
                 f" {plural(record.get('hits')):time} by {plural(record.get('members')):member}",
             )
 
@@ -1146,7 +1146,7 @@ class Fun(Cog):
 
         blunt = await ctx.blunt("Rolling up a **blunt**...")
         await asyncio.sleep(2)
-        return await ctx.blunt(f"Lit up a blunt.\n> Use `{ctx.prefix}blunt hit` to smoke it.", patch=blunt)
+        return await ctx.blunt(f"Lit up a blunt.\n-# Use `{ctx.prefix}blunt hit` to smoke it.", patch=blunt)
 
     @cooldown(1, 5, BucketType.member)
     @blunt.command(name="pass", example="@x", aliases=["give"])
@@ -1164,13 +1164,13 @@ class Fun(Cog):
 
         if not record:
             return await ctx.warn(
-                f"There is no **blunt** to pass\n> Use `{ctx.prefix}blunt light` to roll one up"
+                f"There is no **blunt** to pass\n-# Use `{ctx.prefix}blunt light` to roll one up"
             )
         
         if record.get("user_id") != ctx.author.id:
             member = ctx.guild.get_member(record.get("user_id"))
             return await ctx.warn(
-                f"You don't have the blunt!\n> Steal it from **{member or blunt.get('user_id')}** first!"
+                f"You don't have the blunt!\n-# Steal it from **{member or blunt.get('user_id')}** first!"
             )
         
         if member == ctx.author:
@@ -1186,7 +1186,7 @@ class Fun(Cog):
         )
 
         return await ctx.blunt(
-            f"The **blunt** has been passed to **{member}**!\n> It has been passed around"
+            f"The **blunt** has been passed to **{member}**!\n-# It has been passed around"
             f"**{plural(record.get('passes') + 1):time}**"
         )
 
@@ -1206,12 +1206,12 @@ class Fun(Cog):
 
         if not record:
             return await ctx.warn(
-                f"There is no **blunt** to steal!\n> Use `{ctx.prefix}blunt light` to roll one up!"
+                f"There is no **blunt** to steal!\n-# Use `{ctx.prefix}blunt light` to roll one up!"
         )
         
         if record.get("user_id") == ctx.author.id:
             return await ctx.warn(
-                f"You already have the blunt!\n> Use `{ctx.prefix}blunt pass` to pass it to someone else!"
+                f"You already have the blunt!\n-# Use `{ctx.prefix}blunt pass` to pass it to someone else!"
         )
 
         member = ctx.guild.get_member(record.get("user_id"))
@@ -1250,13 +1250,13 @@ class Fun(Cog):
         
         if not record:
             return await ctx.warn(
-                f"There is no **blunt** to hit\n> Use `{ctx.prefix}blunt light` to roll one up"
+                f"There is no **blunt** to hit\n-# Use `{ctx.prefix}blunt light` to roll one up"
             )
         
         if record.get("user_id") != ctx.author.id:
             member = ctx.guild.get_member(record.get("user_id"))
             return await ctx.warn(
-                f"You don't have the **blunt**!\n> Steal it from **{member or record.get('user_id')}** first!"
+                f"You don't have the **blunt**!\n-# Steal it from **{member or record.get('user_id')}** first!"
             )
 
         members = record.get("members", [])
@@ -1293,7 +1293,7 @@ class Fun(Cog):
             )
         
         return await ctx.blunt(
-            f"You just hit the blunt! \n> It has been hit **{plural(record.get('hits') + 1):time}** by"
+            f"You just hit the blunt! \n-# It has been hit **{plural(record.get('hits') + 1):time}** by"
             f" **{plural(len(members)):member}**!",
             patch=blunt
         )

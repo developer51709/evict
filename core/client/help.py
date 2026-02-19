@@ -392,7 +392,7 @@ class EvictHelp(MinimalHelpCommand):
         embed = Embed(title="", description=error_message, color=config.COLORS.WARN)
         await self.context.send(embed=embed)
 
-    def _add_flag_formatting(self, annotation: FlagConverter, embed: Embed):
+    def _add_flag_formatting(self, annotation: FlagsMeta, embed: Embed):
 
         optional: List[str] = [
             f"`--{name}{' on/off' if isinstance(flag.annotation, Status) else ''}`: {flag.description}"

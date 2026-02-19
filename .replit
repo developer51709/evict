@@ -54,5 +54,3 @@ externalPort = 8080
 
 [userenv.shared]
 OWNER_IDS = "1435974392810307604"
-AUTH_SECRET = "ji+s527pWMQd7MIV8rWkRHMoVy/2k+ZCRJCDvA6ptpA="
-AUTH_TRUST_HOST = "true"
