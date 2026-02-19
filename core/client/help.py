@@ -354,18 +354,6 @@ class EvictHelp(MinimalHelpCommand):
 
         await self.context.reply(embed=embed)
 
-    async def send_error_message(self, error: str):
-
-        if not error or not error.strip():
-            return
-
-        embed = Embed(
-            title="Error",
-            description=error,
-        )
-
-        await self.context.send(embed=embed)
-
     def command_not_found(self, string: str) -> str:
         return f"> {config.EMOJIS.CONTEXT.WARN} {{author}}: Command `{string}` does not exist"
 
