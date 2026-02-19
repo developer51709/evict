@@ -30,7 +30,7 @@ task = "shell.exec"
 args = "redis-server --daemonize yes && MAGICK_HOME=/nix/store/6rsr0h0ga0gnwsbd91vam5db7wqdpgpf-imagemagick-7.1.1-47 LD_LIBRARY_PATH=/nix/store/bmi5znnqk4kg2grkrhk6py0irc8phf6l-gcc-14.2.1.20250322-lib/lib:/nix/store/6rsr0h0ga0gnwsbd91vam5db7wqdpgpf-imagemagick-7.1.1-47/lib:$LD_LIBRARY_PATH python main.py"
 
 [[workflows.workflow]]
-name = "Dashboard [DO NOT FUCKING REMOVE]"
+name = "Dashboard"
 mode = "sequential"
 author = 53393504
 
