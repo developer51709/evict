@@ -509,7 +509,7 @@ class Economy(commands.Cog):
                 ctx.author.id
             ) or 0
 
-            now = datetime.now()
+            now = datetime.now(timezone.utc)
         
             if last_daily:
                 time_diff = now - last_daily
