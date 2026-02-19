@@ -553,8 +553,12 @@ class Evict(commands.AutoShardedBot):
             log.info("Initialized monitoring systems")
 
             self.browser = BrowserHandler()
-            await self.browser.init()
-            log.info("Initialized browser")
+            try:
+                await self.browser.init()
+                log.info("Initialized browser")
+            except Exception as e:
+                log.warning(f"Browser initialization failed (non-fatal): {e}")
+                self.browser = None
 
             self.voice_update_task = self.loop.create_task(self.update_voice_times())
             log.info("Started voice update task")

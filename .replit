@@ -4,7 +4,7 @@ expertMode = true
 
 [nix]
 channel = "stable-25_05"
-packages = ["borgbackup", "cacert", "cairo", "cargo", "ffmpeg-full", "freetype", "gettext", "ghostscript", "gitFull", "gmp", "gobject-introspection", "gtk3", "imagemagickBig", "libiconv", "libxcrypt", "oneDNN", "openssl", "pkg-config", "playwright-driver", "postgresql", "qhull", "rapidfuzz-cpp", "re2", "rustc", "taskflow", "tcl", "tk", "xcodebuild", "xsimd", "zlib", "gcc", "imagemagick"]
+packages = ["borgbackup", "cacert", "cairo", "cargo", "ffmpeg-full", "freetype", "gettext", "ghostscript", "gitFull", "gmp", "gobject-introspection", "gtk3", "imagemagickBig", "libiconv", "libxcrypt", "oneDNN", "openssl", "pkg-config", "playwright-driver", "postgresql", "qhull", "rapidfuzz-cpp", "re2", "rustc", "taskflow", "tcl", "tk", "xcodebuild", "xsimd", "zlib", "gcc", "imagemagick", "redis", "nspr", "nss", "xorg.libX11", "xorg.libXcomposite", "xorg.libXdamage", "xorg.libXext", "xorg.libXfixes", "xorg.libXrandr", "mesa", "expat", "alsa-lib", "at-spi2-atk", "cups", "libdrm", "libxkbcommon", "pango", "glib", "dbus"]
 
 [workflows]
 runButton = "Project"
@@ -27,4 +27,8 @@ outputType = "console"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "MAGICK_HOME=/nix/store/6rsr0h0ga0gnwsbd91vam5db7wqdpgpf-imagemagick-7.1.1-47 LD_LIBRARY_PATH=/nix/store/bmi5znnqk4kg2grkrhk6py0irc8phf6l-gcc-14.2.1.20250322-lib/lib:/nix/store/6rsr0h0ga0gnwsbd91vam5db7wqdpgpf-imagemagick-7.1.1-47/lib:$LD_LIBRARY_PATH python main.py"
+args = "redis-server --daemonize yes && MAGICK_HOME=/nix/store/6rsr0h0ga0gnwsbd91vam5db7wqdpgpf-imagemagick-7.1.1-47 LD_LIBRARY_PATH=/nix/store/bmi5znnqk4kg2grkrhk6py0irc8phf6l-gcc-14.2.1.20250322-lib/lib:/nix/store/6rsr0h0ga0gnwsbd91vam5db7wqdpgpf-imagemagick-7.1.1-47/lib:$LD_LIBRARY_PATH python main.py"
+
+[[ports]]
+localPort = 6379
+externalPort = 80
