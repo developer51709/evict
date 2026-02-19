@@ -222,9 +222,9 @@ class Economy(commands.Cog):
             ctx.author.id
         )
         
-        now = datetime.now()  
+        now = datetime.now(timezone.utc)
         
-        if last_claim:
+        if last_claim and isinstance(last_claim, datetime):
             time_diff = now - last_claim
             if time_diff.total_seconds() < 86400:
                 hours_left = 24 - (time_diff.total_seconds() / 3600)
