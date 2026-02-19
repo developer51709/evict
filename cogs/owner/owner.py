@@ -962,7 +962,10 @@ class Owner(
                 ) as response:
                     if response.status != 200:
                         response_text = await response.text()
-                        return await ctx.warn(f"Failed to fetch instances: {response_text}")
+                        # Check for Cloudflare error page
+                        if "Cloudflare" in response_text:
+                            return await ctx.warn("Failed to fetch instances:\n```\nCloudflare error\n```")
+                        return await ctx.warn(f"Failed to fetch instances:\n```\n{response_text}\n```")
 
                     data = await response.json()
                     instances = data['instances']
