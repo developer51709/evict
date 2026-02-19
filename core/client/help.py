@@ -9,13 +9,11 @@ from discord.ext.commands.flags import FlagsMeta
 from discord.ext.commands.cog import Cog
 from discord.ext.commands import Command
 from discord.utils import MISSING
-from discord.ext.commands import Context
-
 from tools.conversion import Status
 from managers.paginator import Paginator
 
-from typing import List, Mapping, Union, Any, Callable, Coroutine
-from core.client.context import Embed
+from typing import List, Mapping, Union, Any, Callable, Coroutine, TYPE_CHECKING
+from core.client.context import Embed, Context
 
 
 class EvictHelp(MinimalHelpCommand):
