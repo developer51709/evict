@@ -5,6 +5,7 @@ import config
 import asyncio
 import random
 import json
+import logging
 
 from typing import Optional
 from datetime import datetime, timezone, timedelta
@@ -489,80 +490,84 @@ class Economy(commands.Cog):
         """
         Claim your daily reward.
         """
-        last_daily = await self.bot.db.fetchval(
-            """
-            SELECT last_daily 
-            FROM economy 
-            WHERE user_id = $1
-            """,
-            ctx.author.id
-        )
-        
-        current_streak = await self.bot.db.fetchval(
-            """
-            SELECT daily_streak 
-            FROM economy 
-            WHERE user_id = $1
-            """,
-            ctx.author.id
-        ) or 0
-
-        now = datetime.now()
-        
-        if last_daily:
-            time_diff = now - last_daily
-            if time_diff.total_seconds() < 86400:  
-                hours_left = 24 - (time_diff.total_seconds() / 3600)
-                return await ctx.warn( 
-                    f"You can claim your daily reward again in {int(hours_left)} hours"
-                )
-            
-            if time_diff.total_seconds() >= 172800:  
-                current_streak = 0
-        
-        base_coins = 1000
-        streak_bonus = min(current_streak * 100, 1000) 
-        total_coins = base_coins + streak_bonus
-        
-        gems = 0
-        if (current_streak + 1) % 7 == 0:
-            gems = (current_streak + 1) // 7  
-        
-        await self.bot.db.execute(
-            """
-            INSERT INTO economy (user_id, wallet, gems, last_daily, daily_streak) 
-            VALUES ($1, $2, $3, $4, $5) 
-            ON CONFLICT (user_id) DO UPDATE SET 
-                wallet = economy.wallet + $2,
-                gems = economy.gems + $3,
-                last_daily = $4,
-                daily_streak = $5
+        try:
+            last_daily = await self.bot.db.fetchval(
+                """
+                SELECT last_daily 
+                FROM economy 
+                WHERE user_id = $1
                 """,
-            ctx.author.id, 
-            total_coins, 
-            gems, 
-            now, 
-            current_streak + 1
-        )
+                ctx.author.id
+            )
         
-        await self.log_transaction(ctx.author.id, "daily", total_coins)
+            current_streak = await self.bot.db.fetchval(
+                """
+                SELECT daily_streak 
+                FROM economy 
+                WHERE user_id = $1
+                """,
+                ctx.author.id
+            ) or 0
+
+            now = datetime.now()
         
-        next_milestone = 7 - ((current_streak + 1) % 7)
-        embed = Embed(
-            title="Daily Reward Claimed!",
-            description= (
-                ":moneybag:  |  Streak Bonus\n"
-                ":euro:  |  Reward\n"
-                "+---- Total\n"
-                f"{total_coins:,}\n\n"
-                ":fire: | Streak\n"
-                f"{current_streak+1} days\n\n"
-                ":rock: | Next Milestone\n"
-                f"{next_milestone} days until gem reward!"
+            if last_daily:
+                time_diff = now - last_daily
+                if time_diff.total_seconds() < 86400:  
+                    hours_left = 24 - (time_diff.total_seconds() / 3600)
+                    return await ctx.warn( 
+                        f"You can claim your daily reward again in {int(hours_left)} hours"
+                    )
+            
+                if time_diff.total_seconds() >= 172800:  
+                    current_streak = 0
+        
+            base_coins = 1000
+            streak_bonus = min(current_streak * 100, 1000) 
+            total_coins = base_coins + streak_bonus
+        
+            gems = 0
+            if (current_streak + 1) % 7 == 0:
+                gems = (current_streak + 1) // 7  
+        
+            await self.bot.db.execute(
+                """
+                INSERT INTO economy (user_id, wallet, gems, last_daily, daily_streak) 
+                VALUES ($1, $2, $3, $4, $5) 
+                ON CONFLICT (user_id) DO UPDATE SET 
+                    wallet = economy.wallet + $2,
+                    gems = economy.gems + $3,
+                    last_daily = $4,
+                    daily_streak = $5
+                    """,
+                ctx.author.id, 
+                total_coins, 
+                gems, 
+                now, 
+                current_streak + 1
+            )
+        
+            await self.log_transaction(ctx.author.id, "daily", total_coins)
+        
+            next_milestone = 7 - ((current_streak + 1) % 7)
+            embed = Embed(
+                title="Daily Reward Claimed!",
+                description= (
+                    ":moneybag:  |  Streak Bonus\n"
+                    ":euro:  |  Reward\n"
+                    "+---- Total\n"
+                    f"{total_coins:,}\n\n"
+                    ":fire: | Streak\n"
+                    f"{current_streak+1} days\n\n"
+                    ":rock: | Next Milestone\n"
+                    f"{next_milestone} days until gem reward!"
                 ),
-            color=config.COLORS.NEUTRAL
-        ).set_author(name=ctx.author.display_name, icon_url=ctx.author.display_avatar.url)
-        await ctx.send(embed=embed)
+                color=config.COLORS.NEUTRAL
+            ).set_author(name=ctx.author.display_name, icon_url=ctx.author.display_avatar.url)
+            await ctx.send(embed=embed)
+        except Exception as e:
+            await ctx.warn(f"An error occurred: {e}")
+            logging.error(f"Error in daily_reward: {e}")
 
     @commands.group(name="work", invoke_without_command=True)
     @is_econ_allowed()
