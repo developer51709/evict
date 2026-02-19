@@ -1187,7 +1187,7 @@ class Fun(Cog):
 
         return await ctx.blunt(
             f"The **blunt** has been passed to **{member}**!\n-# It has been passed around"
-            f"**{plural(record.get('passes') + 1):time}**"
+            f"**{plural(record.get('passes', 0) + 1):time}**"
         )
 
     @cooldown(1, 5, BucketType.member)
