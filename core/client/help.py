@@ -12,7 +12,7 @@ from discord.utils import MISSING
 from tools.conversion import Status
 from managers.paginator import Paginator
 
-from typing import List, Mapping, Union, Any, Callable, Coroutine, TYPE_CHECKING
+from typing import List, Mapping, Type, Union, Any, Callable, Coroutine, TYPE_CHECKING
 from core.client.context import Embed, Context
 
 
@@ -368,7 +368,7 @@ class EvictHelp(MinimalHelpCommand):
         embed = Embed(description=error, color=config.COLORS.WARN)
         await self.context.send(embed=embed)
 
-    def _add_flag_formatting(self, annotation: FlagsMeta, embed: Embed):
+    def _add_flag_formatting(self, annotation: Type[FlagConverter], embed: Embed):
 
         optional: List[str] = [
             f"`--{name}{' on/off' if isinstance(flag.annotation, Status) else ''}`: {flag.description}"
