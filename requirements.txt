@@ -13,7 +13,7 @@ humanize
 rich
 asyncpg
 orjson
-pydantic==1.9
+pydantic==1.10.21
 humanfriendly
 lru_dict
 async_lru
