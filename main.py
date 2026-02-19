@@ -378,7 +378,7 @@ class Evict(commands.AutoShardedBot):
             if self.voice_update_task:
                 self.voice_update_task.cancel()
                 
-            if hasattr(self, 'browser'):
+            if hasattr(self, 'browser') and self.browser is not None:
                 await self.browser.cleanup()
                 
             if hasattr(self, 'session'):
