@@ -117,7 +117,7 @@ class EvictHelp(MinimalHelpCommand):
             placeholder="Select a Category",
             options=[
                 SelectOption(
-                    label=category[0], value=category[0], description=category[1]
+                    label=category[0], value=category[0]# , description=category[1]
                 )
                 for category in categories
             ],
