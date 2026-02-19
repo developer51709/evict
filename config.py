@@ -51,6 +51,14 @@ AUTHORIZATION = _Dotdict(
         CLIENT_ID=os.environ.get("SPOTIFY_CLIENT_ID", ""),
         CLIENT_SECRET=os.environ.get("SPOTIFY_CLIENT_SECRET", ""),
     ),
+    REDDIT=_Dotdict(
+        CLIENT_ID=os.environ.get("REDDIT_CLIENT_ID", ""),
+        CLIENT_SECRET=os.environ.get("REDDIT_CLIENT_SECRET", ""),
+    ),
+    TWITCH=_Dotdict(
+        CLIENT_ID=os.environ.get("TWITCH_CLIENT_ID", ""),
+        CLIENT_SECRET=os.environ.get("TWITCH_CLIENT_SECRET", ""),
+    ),
     FERNET_KEY=os.environ.get("FERNET_KEY", "") or _generate_fernet_key(),
     WEATHER=os.environ.get("WEATHER_API_KEY", ""),
     JEYY_API=os.environ.get("JEYY_API_KEY", ""),
