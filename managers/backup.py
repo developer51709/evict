@@ -1,3 +1,4 @@
+import os
 import gzip
 import config
 import asyncio
@@ -91,8 +92,9 @@ class BackupManager:
         local_dir.mkdir(exist_ok=True)
         local_path = local_dir / filename
 
+        dsn = os.environ.get("DATABASE_URL", "")
         command = (
-            "PGPASSWORD=admin pg_dumpall -h localhost -U postgres "
+            f"pg_dump \"{dsn}\" "
             "--schema-only --clean --if-exists"
         )
 
@@ -126,8 +128,9 @@ class BackupManager:
         local_dir.mkdir(exist_ok=True)
         local_path = local_dir / filename
 
+        dsn = os.environ.get("DATABASE_URL", "")
         command = (
-            "PGPASSWORD=admin pg_dumpall -h localhost -U postgres "
+            f"pg_dump \"{dsn}\" "
             "--clean --if-exists"
         )
 
