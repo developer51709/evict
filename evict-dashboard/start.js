@@ -1,22 +1,31 @@
-// This is the entry point for the dashboard
-const express = require('express');
-const app = express();
-const port = process.env.DASHBOARD_PORT || 3000
+const { exec, execSync } = require('child_process');
 const path = require('path');
 const fs = require('fs');
-const { exec } = require('child_process');
 
+const port = process.env.DASHBOARD_PORT || 3000;
+const dir = __dirname;
 
-console.log('Starting dashboard on port ' + port + '...');
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+function installDeps() {
+  if (!fs.existsSync(path.join(dir, 'node_modules', 'next'))) {
+    console.log('Installing Next.js dependencies...');
+    execSync('npm install', { cwd: dir, stdio: 'inherit' });
+  }
+}
 
-app.get('/', (req, res) => {
-  res.send('Dashboard is running');
-});
+function startDev() {
+  console.log(`Starting Next.js dashboard on port ${port}...`);
+  const child = exec(`npx next dev -p ${port} -H 0.0.0.0`, {
+    cwd: dir,
+    env: { ...process.env, PORT: String(port) }
+  });
 
-app.listen(port, '0.0.0.0', () => {
-  console.log('Dashboard listening on port ' + port);
-  console.log('dashboard is fully operational but this is the only way to start it and it is not finished')
-});
+  child.stdout.on('data', (data) => process.stdout.write(data));
+  child.stderr.on('data', (data) => process.stderr.write(data));
+  child.on('exit', (code) => {
+    console.log(`Next.js exited with code ${code}`);
+    process.exit(code);
+  });
+}
+
+installDeps();
+startDev();
