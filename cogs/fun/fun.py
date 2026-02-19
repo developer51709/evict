@@ -1168,9 +1168,9 @@ class Fun(Cog):
             )
         
         if record.get("user_id") != ctx.author.id:
-            member = ctx.guild.get_member(record["user_id"])
+            holder = ctx.guild.get_member(record["user_id"])
             return await ctx.warn(
-                f"You don't have the blunt!\n-# Steal it from **{member or blunt.get('user_id')}** first!"
+                f"You don't have the blunt!\n-# Steal it from **{holder or record.get('user_id')}** first!"
             )
         
         if member == ctx.author:
