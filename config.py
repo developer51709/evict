@@ -27,7 +27,7 @@ DISCORD = _Dotdict(
 )
 
 CLIENT = _Dotdict(
-    PREFIX=os.environ.get("BOT_PREFIX", ","),
+    PREFIX=os.environ.get("BOT_PREFIX", ";"),
     DESCRIPTION=os.environ.get("BOT_DESCRIPTION", "evict discord bot"),
     OWNER_IDS={int(x) for x in os.environ.get("OWNER_IDS", "0").split(",") if x.strip()},
     TWITCH_URL=os.environ.get("TWITCH_URL", "https://twitch.tv/directory"),
