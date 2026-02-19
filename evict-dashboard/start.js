@@ -18,5 +18,5 @@ app.get('/', (req, res) => {
 
 app.listen(port, '0.0.0.0', () => {
   console.log('Dashboard listening on port ' + port);
-  console.log('dashboard implementation does might not display anything since it is not done')
+  console.log('dashboard is fully operational but this is the only way to start it and it is not finished')
 });
