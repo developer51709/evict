@@ -440,18 +440,18 @@ class Economy(commands.Cog):
         wallet, _, _ = await self.get_balance(ctx.author.id)
 
         try:
-            amount = int(amount.replace(",", ""))
+            parsed_amount = int(amount.replace(",", ""))
         except ValueError:
             return await ctx.warn("Please provide a valid number!")
 
-        if amount <= 0:
+        if parsed_amount <= 0:
             return await ctx.warn("Amount must be positive!")
         
-        if amount > wallet:
+        if parsed_amount > wallet:
             return await ctx.warn("You don't have enough coins in your wallet!")
 
         confirm = await ctx.prompt(
-            f"Are you sure you want to transfer {amount:,} coins to {user.name}?"
+            f"Are you sure you want to transfer {parsed_amount:,} coins to {user.name}?"
         )
         
         if not confirm:
@@ -465,7 +465,7 @@ class Economy(commands.Cog):
                     SET wallet = wallet - $1 
                     WHERE user_id = $2
                     """,
-                    amount, 
+                    parsed_amount, 
                     ctx.author.id
                 )
                 await conn.execute(
@@ -476,13 +476,13 @@ class Economy(commands.Cog):
                     DO UPDATE SET wallet = economy.wallet + $2
                     """,
                     user.id, 
-                    amount
+                    parsed_amount
                 )
         
-        await self.log_transaction(ctx.author.id, "transfer_sent", -amount)
-        await self.log_transaction(user.id, "transfer_received", amount)
+        await self.log_transaction(ctx.author.id, "transfer_sent", -parsed_amount)
+        await self.log_transaction(user.id, "transfer_received", parsed_amount)
         
-        await ctx.approve(f"Transferred {amount:,} coins to {user.name}")
+        await ctx.approve(f"Transferred {parsed_amount:,} coins to {user.name}")
 
     @commands.command(name="daily")
     @is_econ_allowed()
