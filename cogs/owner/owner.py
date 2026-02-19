@@ -355,7 +355,7 @@ class Owner(
         try:
             await target.send(content, delete_after=15)
         except HTTPException as exc:
-            return await ctx.warn("Failed to send the message!", codeblock(exc.text))
+            return await ctx.warn(f"Failed to send the message!\n{codeblock(exc.text)}")
 
         return await ctx.check()
 
@@ -751,7 +751,7 @@ class Owner(
         """
         Restart the bot.
         """
-        await ctx.prompt(f"Are you sure you wish to restart the bot?", timeout=10)
+        await ctx.prompt("Are you sure you wish to restart the bot?", timeout=10)
         subprocess.run(["pm2", "restart", "main"], check=True)
 
     @command()
@@ -759,7 +759,7 @@ class Owner(
         """
         Push to GitHub.
         """
-        await ctx.prompt(f"Are you sure you would like to push to the GitHub repo?")
+        await ctx.prompt("Are you sure you would like to push to the GitHub repo?")
         subprocess.run(["git", "add", "."], check=True)
         subprocess.run(["git", "commit", "-m", message], check=True)
         subprocess.run(["git", "push"], check=True)
@@ -798,7 +798,7 @@ class Owner(
             await banned.unban(user, reason=f"{ctx.author.name} | self unban")
             await ctx.check()
 
-        except:
+        except Exception:
             await ctx.prompt(
                 f"I could not unban you from ``{banned.name}``! Would you like me to leave?"
             )
@@ -912,8 +912,8 @@ class Owner(
             )
             try:
                 await member.add_roles(role, reason=f"{ctx.author} | Donator status added.")
-                await user.send(f"Thank you for supporting Evict! You have been granted donator perks.")
-            except: 
+                await user.send("Thank you for supporting Evict! You have been granted donator perks.")
+            except Exception: 
                 pass
             return await ctx.check()
         else:
@@ -926,7 +926,7 @@ class Owner(
             )
             try:
                 await member.remove_roles(role, reason=f"{ctx.author} | Donator status removed.")
-            except: 
+            except Exception: 
                 pass
             return await ctx.check()
 
