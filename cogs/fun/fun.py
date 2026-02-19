@@ -1129,10 +1129,10 @@ class Fun(Cog):
         )
 
         if record:
-            user = ctx.guild.get_member(record.get("user_id"))
+            user = ctx.guild.get_member(record["user_id"])
             return await ctx.warn(
-                f"A blunt is already held by **{user or record.get('user_id')}**\n-# It has been hit"
-                f" {plural(record.get('hits')):time} by {plural(record.get('members')):member}",
+                f"A blunt is already held by **{user or record['user_id']}**\n-# It has been hit"
+                f" {plural(record.get('hits', 0)):time} by {plural(record.get('members', 0)):member}",
             )
 
         await self.bot.db.execute(
