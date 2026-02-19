@@ -1168,7 +1168,7 @@ class Fun(Cog):
             )
         
         if record.get("user_id") != ctx.author.id:
-            member = ctx.guild.get_member(record.get("user_id"))
+            member = ctx.guild.get_member(record["user_id"])
             return await ctx.warn(
                 f"You don't have the blunt!\n-# Steal it from **{member or blunt.get('user_id')}** first!"
             )
@@ -1214,7 +1214,7 @@ class Fun(Cog):
                 f"You already have the blunt!\n-# Use `{ctx.prefix}blunt pass` to pass it to someone else!"
         )
 
-        member = ctx.guild.get_member(record.get("user_id"))
+        member = ctx.guild.get_member(record["user_id"])
 
         if random.randint(1, 100) <= 50:
             return await ctx.warn(
@@ -1254,7 +1254,7 @@ class Fun(Cog):
             )
         
         if record.get("user_id") != ctx.author.id:
-            member = ctx.guild.get_member(record.get("user_id"))
+            member = ctx.guild.get_member(record["user_id"])
             return await ctx.warn(
                 f"You don't have the **blunt**!\n-# Steal it from **{member or record.get('user_id')}** first!"
             )
