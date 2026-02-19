@@ -42,14 +42,14 @@ class EvictHelp(MinimalHelpCommand):
     def create_main_help_embed(self, ctx):
 
         embed = Embed(
-            description="**information**\n> [ ] = optional, < > = required\n",
+            description="> `[ ] = optional`\n> `< > = required`\n",
         )
 
         embed.add_field(
-            name="Invite",
-            value="**[invite](https://discord.com/oauth2/authorize?client_id=1203514684326805524)**  • "
-            "**[support](https://discord.gg/evict)**  • "
-            "**[view on web](https://evict.bot)**",
+            name="",
+            value="> [Invite](https://discord.com/oauth2/authorize?client_id=1203514684326805524)\n"
+            "> [Support](https://discord.gg/evict)\n"
+            "> [View on Web](https://evict.bot)",
             inline=False,
         )
 
@@ -58,7 +58,6 @@ class EvictHelp(MinimalHelpCommand):
             icon_url=ctx.bot.user.display_avatar.url,
             url=config.CLIENT.SUPPORT_URL,
         )
-        embed.set_footer(text="Select a category from the dropdown menu below")
 
         return embed
 
@@ -115,7 +114,7 @@ class EvictHelp(MinimalHelpCommand):
             return
 
         select = Select(
-            placeholder="Choose a category...",
+            placeholder="Select a Category",
             options=[
                 SelectOption(
                     label=category[0], value=category[0], description=category[1]
@@ -153,8 +152,8 @@ class EvictHelp(MinimalHelpCommand):
             )
 
             embed = Embed(
-                title=f"Category: {selected_category}",
-                description=f"```\n{command_list}\n```",
+                title=f"`Category:` {selected_category}",
+                description=f"> {selected_cog.description if selected_cog else 'No description'}\n```\n{command_list}\n```",
             )
 
             embed.set_author(

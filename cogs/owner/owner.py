@@ -2434,7 +2434,7 @@ class Owner(
                 )
                 
             embed = Embed(
-                title=f"📋 Entitlements Overview",
+                title="📋 Entitlements Overview",
                 description=f"Showing entitlements for {guild.name if guild else guild_id}",
                 color=0x2b2d31
             )
