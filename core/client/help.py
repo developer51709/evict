@@ -366,28 +366,18 @@ class EvictHelp(MinimalHelpCommand):
 
         await self.context.send(embed=embed)
 
-    async def command_not_found(self, string: str):
+    def command_not_found(self, string: str) -> str:
+        return f"> {config.EMOJIS.CONTEXT.WARN} {{author}}: Command `{string}` does not exist"
 
-        if not string:
+    def subcommand_not_found(self, command: Command, string: str) -> str:
+        return f"> {config.EMOJIS.CONTEXT.WARN} {{author}}: Command `{command.qualified_name} {string}` does not exist"
+
+    async def send_error_message(self, error: str | None):
+        if not error:
             return
 
-        error_message = f"> {config.EMOJIS.CONTEXT.WARN} {self.context.author.mention}: Command `{string}` does not exist"  # type: ignore
-        if not error_message.strip():
-            return
-
-        embed = Embed(description=error_message, color=config.COLORS.WARN)
-        await self.context.send(embed=embed)
-
-    async def subcommand_not_found(self, command: str, subcommand: str):
-
-        if not command or not subcommand:
-            return
-
-        error_message = f"> {config.EMOJIS.CONTEXT.WARN} {self.context.author.mention}: Command `{command} {subcommand}` does not exist"  # type: ignore
-        if not error_message.strip():
-            return
-
-        embed = Embed(title="", description=error_message, color=config.COLORS.WARN)
+        error = error.replace("{author}", self.context.author.mention)
+        embed = Embed(description=error, color=config.COLORS.WARN)
         await self.context.send(embed=embed)
 
     def _add_flag_formatting(self, annotation: FlagsMeta, embed: Embed):
