@@ -3,7 +3,6 @@ import psutil
 import onnxruntime
 import discord
 import secrets
-import os
 import importlib
 import glob
 import asyncpg
@@ -13,10 +12,9 @@ import jishaku.flags
 import config
 import asyncio
 import discord_ios
-import psutil
 
 from contextlib import suppress
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from pomice import NodePool
 from collections.abc import Mapping
@@ -29,16 +27,14 @@ from asyncpraw import Reddit as RedditClient
 from cashews import cache
 from collections import defaultdict
 from multiprocessing import Pool, cpu_count
-from datetime import datetime, timedelta, timezone
 from typing import List
 
 from managers.backup import BackupManager
 from managers.parser.TagScript.exceptions import EmbedParseError, TagScriptError
 
-from core.client import database
+from core.client import database, logging
 from core.client.browser import BrowserHandler
 from core.client.context import Context, Redis
-from core.client import logging
 from core.client.database import Database, Settings
 from core.client.help import EvictHelp
 
