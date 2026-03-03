@@ -54,3 +54,4 @@ externalPort = 8080
 
 [userenv.shared]
 OWNER_IDS = "1435974392810307604"
+LAVALINK_NODE_COUNT = "1"

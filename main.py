@@ -585,12 +585,12 @@ class Evict(commands.AutoShardedBot):
             identifier = "evict"
             try:
                 await NodePool().create_node(
-                    bot=self,  
-                    host="listenlava-secondary.squareweb.app",
-                    port=443,
-                    password="kirito",
+                    bot=self, 
+                    host="lavahatry4.techbyte.host",
+                    port=3000,
+                    password="naig.is-a.dev",
                     secure=True,
-                    identifier="Listen [USA#1]",
+                    identifier=identifier,
                     spotify_client_id=config.AUTHORIZATION.SPOTIFY.CLIENT_ID,
                     spotify_client_secret=config.AUTHORIZATION.SPOTIFY.CLIENT_SECRET,
                 )
