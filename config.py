@@ -1,6 +1,39 @@
 import os
 import base64
 
+from pathlib import Path
+
+
+def _load_env(path: Path = Path(__file__).with_name(".env")) -> None:
+    """Load a local .env file into os.environ without overriding real env vars."""
+    try:
+        lines = path.read_text(encoding="utf-8").splitlines()
+    except OSError:
+        return
+
+    for line in lines:
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        if line.startswith("export "):
+            line = line[len("export "):].lstrip()
+
+        key, _, value = line.partition("=")
+        key = key.strip()
+        value = value.strip()
+        if not key:
+            continue
+
+        if len(value) >= 2 and value[0] == value[-1] and value[0] in "'\"":
+            value = value[1:-1]
+        elif " #" in value:
+            value = value.split(" #", 1)[0].rstrip()
+
+        os.environ.setdefault(key, value)
+
+
+_load_env()
+
 
 def _generate_fernet_key():
     return base64.urlsafe_b64encode(os.urandom(32)).decode()

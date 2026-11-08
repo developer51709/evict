@@ -71,3 +71,9 @@ dmypy.json
 cython_debug/
 .pythonlibs/
 node_modules/
+
+# local dev services (compiled Redis + its data)
+.redis/
+dump.rdb
+.venv/
+.vendor/
